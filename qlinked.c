@@ -1,93 +1,84 @@
-// Online C compiler to run C program online
 #include <stdio.h>
-#include<stdlib.h>
- struct node 
- {
-     int data;
-     struct node *link;
- }*front,*rear;
- void enqueue(int item);
- void dequeue();
- void display();
- void main()
- {
-   int choice;
-   while(1)
-   {
-   printf("enter your required choice\n1.Enqueue\n2.Dequeue\n3.Display\n4.exit");
-   scanf("%d",&choice);
-   switch(choice)
-   {
-       case 1:int item;
-       printf("\nenter the  item to the linkedlist;\n");
-              scanf("%d",&item);
-              enqueue(item);
-       break;
-       case 2:dequeue();
-       break;
-       case 3:display();
-       break;
-       case 4:exit(0);
-       break;
-       default:printf("invalid input");
-       
-   }
-   }
-  
- }
- void enqueue()
- {
-    struct node *new;
-    new=(struct node*)malloc(1*sizeof(struct node));
-    new->data=item;
-    new->link=NULL;
-    if(front=rear=NULL)
-    {
-        front=rear=new;
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *link;
+} *front = NULL, *rear = NULL;
+
+void enqueue();
+void dequeue();
+void display();
+
+int main() {
+    int choice = 0;
+    
+    while (choice != 4) {
+        printf("\nEnter your choice\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\n");
+        scanf("%d", &choice);
+        
+        switch (choice) {
+            case 1:
+                enqueue();
+                break;
+            case 2:
+                dequeue();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                exit(0);
+                break;
+            default:
+                printf("Invalid input\n");
+        }
     }
-    else
-    {
-     rear->link=new;
-     rear=new;
-  
+    
+    return 0;
+}
+
+void enqueue() {
+    int item;
+    printf("\nEnter the item to the linked list:\n");
+    scanf("%d", &item);
+
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
+    newNode->data = item;
+    newNode->link = NULL;
+
+    if (front == NULL && rear == NULL) {
+        front = rear = newNode;
+    } else {
+        rear->link = newNode;
+        rear = newNode;
     }
-      display();
- }
- void dequeue()
- {
-    struct node *temp;
-     if(front==NULL)
-     {
-         print("under flow...");
-     }
-     else if(front==rear)
-     {
-         temp=front;
-         front=rear=NULL;
-         free(temp);
-     }
-     else
-     {
-         temp=front;
-         front=front->link;
-         free(temp);
-         
-     }
- }
- void display()
- 
- { 
-     struct node *link;
-     ptr=front;
-     if(front==NULL)
-     {
-         print("under flow...");
-     }
-     else
-     {
-         while(ptr!=NULL)
-         {
-         print("%d",ptr->data);
-         ptr=ptr->link;
-     }
- }
+}
+
+void dequeue() {
+    if (front == NULL) {
+        printf("Underflow...\n");
+    } else {
+        struct node *temp = front;
+        if (front == rear) {
+            front = rear = NULL;
+        } else {
+            front = front->link;
+        }
+        free(temp);
+    }
+}
+
+void display() {
+    if (front == NULL) {
+        printf("Queue is empty...\n");
+    } else {
+        struct node *ptr = front;
+        printf("Queue: ");
+        while (ptr != NULL) {
+            printf("%d ", ptr->data);
+            ptr = ptr->link;
+        }
+        printf("\n");
+    }
+}
